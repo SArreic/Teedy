@@ -94,7 +94,7 @@
           <!-- printFailingErrors is pretty useful -->
           <printFailingErrors>true</printFailingErrors>
           <rulesets>
-            <ruleset>/mnt/e/practice-answer.xml</ruleset>
+            <ruleset>/practice-answer.xml</ruleset>
           </rulesets>
         </configuration>
         <executions>
