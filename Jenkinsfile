@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment {
+        DOCKER_CREDENTIALS = 'dockerhub_credentials'
         IMAGE_NAME = 'SArreic/Teedy'
         IMAGE_TAG = 'latest'
     }
@@ -15,7 +16,7 @@ pipeline {
         // Building Docker images
         stage('Building Image') {
                     steps {
-                        bat "docker build -t ${DOCKER_IMAGE} . --fail-never"
+                        bat "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} . --fail-never"
                     }
                 }
         // Uploading Docker images into Docker Hub
