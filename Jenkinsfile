@@ -13,14 +13,11 @@ pipeline {
             }
         }
         // Building Docker images
-        stage('Building image') {
-            steps{
-                script {
-                    // Assuming the Dockerfile is in the project root directory
-                    docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+        stage('Building Image') {
+                    steps {
+                        bat "docker build -t ${DOCKER_IMAGE} ."
+                    }
                 }
-            }
-        }
         // Uploading Docker images into Docker Hub
         stage('Upload image') {
                     steps {
