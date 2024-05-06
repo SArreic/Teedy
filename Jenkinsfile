@@ -16,7 +16,7 @@ pipeline {
         // Building Docker images
         stage('Building Image') {
                     steps {
-                        bat "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} . --fail-never"
+                        bat "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                     }
                 }
         // Uploading Docker images into Docker Hub
@@ -39,9 +39,9 @@ pipeline {
                     // Pull the image from Docker Hub
                     docker.image("${IMAGE_NAME}:${IMAGE_TAG}").pull()
                     // Run containers on specified ports
-                    bat 'docker run -d -p 8082:8080 --name teedy_manual02 teedy2024_manual --fail-never'
-                    bat 'docker run -d -p 8083:8080 --name teedy_manual03 teedy2024_manual --fail-never'
-                    bat 'docker run -d -p 8084:8080 --name teedy_manual01 teedy2024_manual --fail-never'
+                    bat 'docker run -d -p 8082:8080 --name teedy_manual02 teedy2024_manual'
+                    bat 'docker run -d -p 8083:8080 --name teedy_manual03 teedy2024_manual'
+                    bat 'docker run -d -p 8084:8080 --name teedy_manual01 teedy2024_manual'
                 }
             }
         }
@@ -49,10 +49,10 @@ pipeline {
     post {
         always {
             // Clean up Docker images and containers to avoid disk space issues
-            bat 'docker rm -f teedy_manual01 || true --fail-never'
-            bat 'docker rm -f teedy_manual02 || true --fail-never'
-            bat 'docker rm -f teedy_manual03 || true --fail-never'
-            bat 'docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true --fail-never'
+            bat 'docker rm -f teedy_manual01 || true'
+            bat 'docker rm -f teedy_manual02 || true'
+            bat 'docker rm -f teedy_manual03 || true'
+            bat 'docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true'
         }
     }
 }
