@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS = 'dockerhub_credentials'
         IMAGE_NAME = 'sarreic/teedy2024_manual'
-        IMAGE_TAG = 'latest'
+        IMAGE_TAG = 'v1.0'
     }
     stages{
         stage('Package') {
