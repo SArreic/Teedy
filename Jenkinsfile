@@ -18,9 +18,9 @@ pipeline {
             }
         }
         stage('Test report') {
-//             steps {
-//                 bat 'mvn surefire-report:report'
-//             }
+            steps {
+                bat 'mvn surefire-report:report'
+            }
         }
     }
 
