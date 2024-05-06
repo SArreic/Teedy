@@ -1,33 +1,60 @@
 pipeline {
     agent any
+    environment {
+        IMAGE_NAME = 'SArreic/teedy'
+        IMAGE_TAG = 'latest'
+    }
     stages{
-        stage('Build') {
+        stage('Package') {
             steps {
-                bat 'mvn -B -DskipTests clean package  --fail-never'
+                checkout scmGit(branches: [[name: '*/master']], extensions: [],
+                userRemoteConfigs: [[url: 'https://github.com/SArreic/Teedy.git']])
+                bat 'mvn -B -DskipTests clean package'
             }
         }
-        stage('Doc') {
-            steps {
-                bat 'mvn javadoc:jar --fail-never'
+        // Building Docker images
+        stage('Building image') {
+            steps{
+                script {
+                    // Assuming the Dockerfile is in the project root directory
+                    docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                }
             }
         }
-        stage('pmd') {
-            steps {
-                bat 'mvn pmd:pmd --fail-never'
-            }
-        }
-        stage('Test report') {
-            steps {
-                bat 'mvn surefire-report:report  --fail-never'
+        // Uploading Docker images into Docker Hub
+        stage('Upload image') {
+                    steps {
+                        script {
+                            // Login to Docker Hub
+                            docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
+                                // Build and push the Docker image
+                                def image = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                                image.push()
+                            }
+                        }
+                    }
+                }
+        //Running Docker container
+        stage('Run containers'){
+            steps{
+                script{
+                    // Pull the image from Docker Hub
+                    docker.image("${IMAGE_NAME}:${IMAGE_TAG}").pull()
+                    // Run containers on specified ports
+                    bat 'docker run -d -p 8082:8080 --name teedy_manual02 teedy2024_manual'
+                    bat 'docker run -d -p 8083:8080 --name teedy_manual03 teedy2024_manual'
+                    bat 'docker run -d -p 8084:8080 --name teedy_manual01 teedy2024_manual'
+                }
             }
         }
     }
-
     post {
         always {
-            archiveArtifacts artifacts: '**/target/site/**', fingerprint: true
-            archiveArtifacts artifacts: '**/target/**/*.jar', fingerprint: true
-            archiveArtifacts artifacts: '**/target/**/*.war', fingerprint: true
+            // Clean up Docker images and containers to avoid disk space issues
+            bat 'docker rm -f teedy_manual01 || true'
+            bat 'docker rm -f teedy_manual02 || true'
+            bat 'docker rm -f teedy_manual03 || true'
+            bat 'docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true'
         }
     }
 }
