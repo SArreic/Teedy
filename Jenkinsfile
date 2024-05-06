@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_CREDENTIALS = 'dockerhub_credentials'
-        IMAGE_NAME = 'sarreic/teedy2024_manualeedy'
+        IMAGE_NAME = 'sarreic/teedy2024_manual'
         IMAGE_TAG = 'latest'
     }
     stages{
