@@ -46,13 +46,13 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            // Clean up Docker images and containers to avoid disk space issues
-            bat 'docker rm -f teedy_manual01 || true'
-            bat 'docker rm -f teedy_manual02 || true'
-            bat 'docker rm -f teedy_manual03 || true'
-            bat 'docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true'
-        }
-    }
+//     post {
+//         always {
+//             // Clean up Docker images and containers to avoid disk space issues
+//             bat 'docker rm -f teedy_manual01 || true'
+//             bat 'docker rm -f teedy_manual02 || true'
+//             bat 'docker rm -f teedy_manual03 || true'
+//             bat 'docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true'
+//         }
+//     }
 }
