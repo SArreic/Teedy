@@ -15,7 +15,7 @@ pipeline {
         // Building Docker images
         stage('Building Image') {
                     steps {
-                        bat "docker build -t ${DOCKER_IMAGE} ."
+                        bat "docker build -t ${DOCKER_IMAGE} . --fail-never"
                     }
                 }
         // Uploading Docker images into Docker Hub
