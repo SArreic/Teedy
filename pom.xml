@@ -153,7 +153,7 @@
       <dependency>
         <groupId>com.sismics.docs</groupId>
         <artifactId>docs-core</artifactId>
-        <version>${project.version}</version>
+        <version>{project.version}</version>
       </dependency>
     
       <dependency>

@@ -13,13 +13,14 @@ pipeline {
         }
         stage('pmd') {
             steps {
-                bat 'mvn pmd:pmd'
+//                 bat 'mvn pmd:pmd'
+                sh 'mvn pmd:pmd'
             }
         }
         stage('Test report') {
-            steps {
-                bat 'mvn surefire-report:report'
-            }
+//             steps {
+//                 bat 'mvn surefire-report:report'
+//             }
         }
     }
 
