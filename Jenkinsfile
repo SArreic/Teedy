@@ -52,7 +52,7 @@ pipeline {
     stages {
         stage('K8s') {
             steps {
-                bat 'kubectl set image deployments/h teedy2024_manualeedy:v1.0'
+                bat 'kubectl set image h teedy2024_manualeedy:v1.0'
             }
         }
     }
