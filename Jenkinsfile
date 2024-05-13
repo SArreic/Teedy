@@ -51,6 +51,7 @@ pipeline {
     agent any
     environment {
         DOCKER_CREDENTIALS = 'dockerhub_credentials'
+        KUBERNETS_CREDENTIALS = 'k8s'
         MAGE_NAME = 'sarreic/teedy2024_manual'
         IMAGE_TAG = 'v1.0'
     }
@@ -59,7 +60,9 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
-                    bat 'kubectl set image deployment/h teedy2024-manualeedy-cr2vs=sarreic/teedy2024_manual:v1.0'
+                        withKubeConfig([credentialsId: 'k8s']) {
+                            bat 'kubectl set image deployment/h teedy2024-manualeedy-cr2vs=sarreic/teedy2024_manual:v1.0'
+                        }
                     }
                 }
             }
