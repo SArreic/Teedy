@@ -56,14 +56,13 @@ pipeline {
     }
     stages {
         stage('K8s') {
-            script {
-                steps {
+            steps {
+                script {
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
                     bat 'kubectl set image deployment/h teedy2024-manualeedy-cr2vs=sarreic/teedy2024_manual:v1.0'
                     }
                 }
             }
-
         }
     }
 }
