@@ -49,10 +49,17 @@
 // }
 pipeline {
     agent any
+    environment {
+        DOCKER_CREDENTIALS = 'dockerhub_credentials'
+        MAGE_NAME = 'sarreic/teedy2024_manual'
+        IMAGE_TAG = 'v1.0'
+    }
     stages {
         stage('K8s') {
             steps {
-                bat 'kubectl set image deployment/h teedy2024-manualeedy-cr2vs=sarreic/teedy2024_manual:v1.0'
+                docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
+                    bat 'kubectl set image deployment/h teedy2024-manualeedy-cr2vs=sarreic/teedy2024_manual:v1.0'
+                }
             }
         }
     }
