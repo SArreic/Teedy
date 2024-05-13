@@ -52,7 +52,7 @@ pipeline {
     stages {
         stage('K8s') {
             steps {
-                bat 'minikube start'
+//                 bat 'minikube start'
                 bat 'kubectl set image deployments/h sarreic/teedy2024_manual=8b8da89f281f'
             }
         }
