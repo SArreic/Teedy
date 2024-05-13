@@ -52,7 +52,8 @@ pipeline {
     stages {
         stage('K8s') {
             steps {
-                bat 'kubectl set image deployments/hello-node container-name=image-id'
+                bat ' kubectl expose deployment h --type=LoadBalancer --port=8080'
+                bat ' minikube service h'
             }
         }
     }
