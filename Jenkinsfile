@@ -52,8 +52,7 @@ pipeline {
     stages {
         stage('K8s') {
             steps {
-//                 bat ' kubectl expose deployment h --type=LoadBalancer --port=8087'
-                bat ' minikube service h'
+                bat 'kubectl set image deployments/h sarreic/teedy2024_manual=8b8da89f281f'
             }
         }
     }
