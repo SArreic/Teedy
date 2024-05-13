@@ -53,7 +53,7 @@ pipeline {
         stage('K8s') {
             steps {
                 bat ' kubectl expose deployment h --type=LoadBalancer --port=8080'
-                bat ' minikube service h'
+//                 bat ' minikube service h'
             }
         }
     }
